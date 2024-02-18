@@ -28,9 +28,9 @@ async def retrieve_post_prompts():
 
 
 async def add_post_prompt(post_prompt_data: dict) -> dict:
-    student = await post_prompt_collection.insert_one(post_prompt_data)
-    new_student = await post_prompt_collection.find_one({"_id": student.inserted_id})
-    return post_prompt_helper(new_student)
+    post_prompt = await post_prompt_collection.insert_one(post_prompt_data)
+    new_post_prompt = await post_prompt_collection.find_one({"_id": post_prompt.inserted_id})
+    return post_prompt_helper(new_post_prompt)
 
 
 async def retrieve_post_prompt(id: str) -> dict:

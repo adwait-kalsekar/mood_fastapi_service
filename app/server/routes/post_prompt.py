@@ -17,49 +17,49 @@ from server.models.post_prompt import (
 
 router = APIRouter()
 
-@router.post("/", response_description="Student data added into the database")
-async def add_student_data(student: PostPromptSchema = Body(...)):
-    student = jsonable_encoder(student)
-    new_student = await add_post_prompt(student)
-    return ResponseModel(new_student, "Student added successfully.")
+@router.post("/", response_description="PostPrompt data added into the database")
+async def add_post_prompt_data(post_prompt: PostPromptSchema = Body(...)):
+    post_prompt = jsonable_encoder(post_prompt)
+    new_post_prompt = await add_post_prompt(post_prompt)
+    return ResponseModel(new_post_prompt, "PostPrompt added successfully.")
 
-@router.get("/", response_description="Students retrieved")
-async def get_students():
-    students = await retrieve_post_prompts()
-    if students:
-        return ResponseModel(students, "Students data retrieved successfully")
-    return ResponseModel(students, "Empty list returned")
+@router.get("/", response_description="PostPrompts retrieved")
+async def get_post_prompt():
+    post_prompts = await retrieve_post_prompts()
+    if post_prompts:
+        return ResponseModel(post_prompts, "PostPrompts data retrieved successfully")
+    return ResponseModel(post_prompts, "Empty list returned")
 
 
-@router.get("/{id}", response_description="Student data retrieved")
-async def get_student_data(id):
-    student = await retrieve_post_prompt(id)
-    if student:
-        return ResponseModel(student, "Student data retrieved successfully")
-    return ErrorResponseModel("An error occurred.", 404, "Student doesn't exist.")
+@router.get("/{id}", response_description="PostPrompt data retrieved")
+async def get_post_prompt_data(id):
+    post_prompt = await retrieve_post_prompt(id)
+    if post_prompt:
+        return ResponseModel(post_prompt, "PostPrompt data retrieved successfully")
+    return ErrorResponseModel("An error occurred.", 404, "PostPrompt doesn't exist.")
 
 @router.put("/{id}")
-async def update_student_data(id: str, req: UpdatePostPromptModel = Body(...)):
-    req = {k: v for k, v in req.dict().items() if v is not None}
-    updated_student = await update_post_prompt(id, req)
-    if updated_student:
+async def update_post_prompt_data(id: str, req: UpdatePostPromptModel = Body(...)):
+    req = {k: v for k, v in req.model_dump().items() if v is not None}
+    updated_post_prompt = await update_post_prompt(id, req)
+    if updated_post_prompt:
         return ResponseModel(
-            "Student with ID: {} name update is successful".format(id),
-            "Student name updated successfully",
+            "PostPrompt with ID: {} name update is successful".format(id),
+            "PostPrompt name updated successfully",
         )
     return ErrorResponseModel(
         "An error occurred",
         404,
-        "There was an error updating the student data.",
+        "There was an error updating the post_prompt data.",
     )
 
-@router.delete("/{id}", response_description="Student data deleted from the database")
-async def delete_student_data(id: str):
-    deleted_student = await delete_post_prompt(id)
-    if deleted_student:
+@router.delete("/{id}", response_description="PostPrompt data deleted from the database")
+async def delete_post_prompt_data(id: str):
+    deleted_post_prompt = await delete_post_prompt(id)
+    if deleted_post_prompt:
         return ResponseModel(
-            "Student with ID: {} removed".format(id), "Student deleted successfully"
+            "PostPrompt with ID: {} removed".format(id), "PostPrompt deleted successfully"
         )
     return ErrorResponseModel(
-        "An error occurred", 404, "Student with id {0} doesn't exist".format(id)
+        "An error occurred", 404, "PostPrompt with id {0} doesn't exist".format(id)
     )
