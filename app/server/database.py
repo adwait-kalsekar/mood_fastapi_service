@@ -1,7 +1,11 @@
 import motor.motor_asyncio
 from bson.objectid import ObjectId
+from dotenv import load_dotenv
+import os
 
-MONGO_DETAILS = "mongodb+srv://kalsekaradwait:supersecretpassword@cluster0.fpzwdox.mongodb.net/?retryWrites=true&w=majority"
+load_dotenv()
+
+MONGO_DETAILS = os.getenv("MONGODB_URL")
 
 client = motor.motor_asyncio.AsyncIOMotorClient(MONGO_DETAILS)
 
