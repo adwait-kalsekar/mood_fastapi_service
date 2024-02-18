@@ -15,7 +15,8 @@ post_prompt_collection = database.get_collection("post_prompt_collection")
 def post_prompt_helper(post_prompt) -> dict:
     return {
         "id": str(post_prompt["_id"]),
-        "prompt": post_prompt["prompt"],
+        "prompt1": post_prompt["prompt1"],
+        "prompt2": post_prompt["prompt2"],
         "image_url": post_prompt["image_url"],
         "user_email": post_prompt["email"]
     }
