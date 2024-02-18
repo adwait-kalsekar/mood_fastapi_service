@@ -1,17 +1,8 @@
 {
-  "builds": [
-    {
-      "src": "moodai/wsgi.py",
-      "use": "@vercel/python",
-      "config": {
-        "runtime": "Python3.11"
-      }
-    }
-  ],
-  "routes": [
-    {
-      "src": "/(.*)",
-      "dest": "django_app_name/wsgi.py"
-    }
-  ]
+  "version": 2,
+  "builds": [{ "src": "main.py", "use": "@vercel/python" }],
+  "routes": [{ "src": "/(.*)", "dest": "/main.py" }],
+  "env": {
+    "APP_MODULE": "main:app"
+  }
 }
